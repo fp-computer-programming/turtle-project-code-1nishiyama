@@ -3,48 +3,97 @@
 import turtle
 
 window = turtle.Screen()
-turtle.screensize(500, 500)
+window.setup(500, 500)
 t = turtle.Turtle()
 t.hideturtle()
 t.pensize(3)
+window.bgcolor('light blue')
+length = window.numinput("Length", "Please choose the length for the base to be (100-150px): ")
 
-length = window.numinput("Length", "Please choose the length for the base to be (px): ")
-
-def draw_base():
+def draw_door():
+    t.penup()
+    t.goto(-25, 0)
+    t.pendown()
     t.begin_fill()
-    for x in range(4):
+    t.fillcolor('#654321')
+    for x in range(2):
         t.right(90)
-        t.forward(length)
-    t.fillcolor(window.textinput("Color", "Please choose a base color: "))
+        t.forward(35)
+        t.right(90)
+        t.forward(25)
+    t.end_fill()
+
+def draw_double_door():
+    t.penup()
+    t.goto(-25, 0)
+    t.pendown()
+    t.begin_fill()
+    t.fillcolor('#654321')
+    for x in range(2):
+        t.right(90)
+        t.forward(30)
+        t.right(90)
+        t.forward(25)
     t.end_fill()
     t.penup()
+    t.goto(0, 0)
+    t.pendown()
+    t.begin_fill()
+    t.fillcolor('#654321')
+    for x in range(2):
+        t.right(90)
+        t.forward(30)
+        t.right(90)
+        t.forward(25)
+    t.end_fill()
+
+
+def draw_base():
+    t.speed(3)
+    t.begin_fill()
+    t.right(180)
+    t.forward(length / 2)
+    for x in range(3):
+        t.right(90)
+        t.forward(length)
+    t.right(90)
+    t.forward(length / 2)
+    t.fillcolor(window.textinput("Color", "Please choose a base color: "))
+    t.end_fill()
+
+def draw_bg():
+    t.speed(0)
+    t.goto(-500, -500)
+    t.pendown()
+    t.begin_fill()
+    t.goto(-500, 0)
+    t.goto(500, 0)
+    t.goto(500, -500)
+    t.fillcolor('light green')
+    t.end_fill()
+    t.penup()
+    t.speed(3)
 
 
 def type_a():
+    t.goto(-(length / 2), length)
     t.begin_fill()
-    t.goto(-(length), 0)
-    a1 = window.numinput("Side 1", "Please choose the angle for the roof: ")
     t.pendown()
-    t.left(a1)
-    t.forward(a1)
-    t.goto(0, 0)
+    t.right(140)
+    t.forward(length / 1.5)
+    t.goto(length / 2, length)
     t.fillcolor(window.textinput("Color", "Please choose a roof color: "))
     t.end_fill()
-
 
 def type_b():
+    t.goto(-(length / 2), length)
     t.begin_fill()
-    t.goto(-(length), 0)
-    a1 = window.numinput("Side 1", "Please choose the angle for left side of the roof (0-90): ")
     t.pendown()
-    t.left(a1)
-    t.forward(length)
-    a2 = window.numinput("Side 2", "Please choose the angle for right side of the roof (0-90): ")
-    t.left(a2)
-    t.goto(0, 0)
+    t.right(165)
+    t.forward(length / 1.5)
+    t.goto(length / 2, length)
     t.fillcolor(window.textinput("Color", "Please choose a roof color: "))
     t.end_fill()
-    t.penup()
 
 def door():
     t.goto(-(length / 2), 0)
@@ -55,7 +104,17 @@ def door():
     
 
 draw_base()
-type_b()
-door()
+num_doors = window.textinput("Roof", "Please choose '1' or '2' doors: ")
+if num_doors == 1:
+    draw_door()
+elif num_doors == 2:
+    draw_double_door()
+draw_bg()
+roof_type = window.textinput("Roof", "Please choose roof type 'a' or 'b': ")
+if roof_type.lower() == 'a':
+    type_a()
+elif roof_type.lower() == 'b':
+    type_b()
+
 
 window.mainloop()
